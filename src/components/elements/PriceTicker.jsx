@@ -11,30 +11,13 @@ const PriceTicker = () => {
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        // Fetch XRP price from CoinGecko (free, no API key needed)
+        // Fetch XRP price from CoinGecko
         const xrpResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd&include_24hr_change=true');
         const xrpData = await xrpResponse.json();
         
-        // Fetch Gold and Silver from GoldAPI (using their free tier)
-        // Alternative: You can also use metalpriceapi.com or currencyapi.com
-        const metalsResponse = await fetch('https://www.goldapi.io/api/XAU,XAG/USD', {
-          headers: {
-            'x-access-token': 'goldapi-demo-key' // Using demo key - replace with real key for production
-          }
-        }).catch(() => null);
-        
-        let goldPrice = null;
-        let silverPrice = null;
-        
-        if (metalsResponse && metalsResponse.ok) {
-          const metalsData = await metalsResponse.json();
-          goldPrice = metalsData.price / 31.1035; // Convert to per oz
-          silverPrice = metalsData.price_gram_24k; // Estimate
-        } else {
-          // Fallback to mock/estimated prices if API fails
-          goldPrice = 2650; // Approximate current gold price
-          silverPrice = 31.50; // Approximate current silver price
-        }
+        // Fetch Gold and Silver from our backend API
+        const metalsResponse = await fetch('/api/metals-prices');
+        const metalsData = await metalsResponse.json();
 
         setPrices({
           xrp: {
@@ -42,22 +25,21 @@ const PriceTicker = () => {
             change: xrpData.ripple?.usd_24h_change
           },
           gold: {
-            price: goldPrice,
-            change: null // API doesn't provide change
+            price: metalsData.gold ? parseFloat(metalsData.gold) : null,
+            change: null
           },
           silver: {
-            price: silverPrice,
+            price: metalsData.silver ? parseFloat(metalsData.silver) : null,
             change: null
           }
         });
         setLoading(false);
       } catch (error) {
         console.error('Error fetching prices:', error);
-        // Set fallback prices on error
         setPrices({
           xrp: { price: null, change: null },
-          gold: { price: 2650, change: null },
-          silver: { price: 31.50, change: null }
+          gold: { price: null, change: null },
+          silver: { price: null, change: null }
         });
         setLoading(false);
       }
