@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { dateFormate } from "../../utils";
-import MenuData from "../../data/menu/HeaderMenu.json";
-import OffcanvasMenu from "./OffcanvasMenu";
 import PriceTicker from "../elements/PriceTicker";
 import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
