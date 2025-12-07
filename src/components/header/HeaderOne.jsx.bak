@@ -2,9 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { dateFormate } from "../../utils";
-import MenuData from "../../data/menu/HeaderMenu.json";
-import OffcanvasMenu from "./OffcanvasMenu";
-import PriceTicker from "../elements/PriceTicker";
+import SocialLink from "../../data/social/SocialLink.json";
 import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
 
@@ -116,7 +114,28 @@ const HeaderOne = () => {
                 </ul>
               </div>
               <div className="col-md-auto">
-                <PriceTicker />
+                <ul className="ml-auto social-share header-top__social-share">
+                  <li>
+                    <a href={SocialLink.fb.url}>
+                      <i className={SocialLink.fb.icon} />
+                    </a>
+                  </li>
+                  <li>
+                    <a href={SocialLink.twitter.url}>
+                      <i className={SocialLink.twitter.icon} />
+                    </a>
+                  </li>
+                  <li>
+                    <a href={SocialLink.instagram.url}>
+                      <i className={SocialLink.instagram.icon} />
+                    </a>
+                  </li>
+                  <li>
+                    <a href={SocialLink.linked.url}>
+                      <i className={SocialLink.linked.icon} />
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
