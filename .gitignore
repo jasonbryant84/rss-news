@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cache directories
+.cache/
+.next/cache/
+*.cache
+
+# proxy cache
+public/cache/
